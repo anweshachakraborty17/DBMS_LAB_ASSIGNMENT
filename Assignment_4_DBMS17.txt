@@ -1,0 +1,115 @@
+ASSIGNMENT-4
+--------------------------------------------------------------------------------------------------
+CREATION OF TABLES:
+SAILORS TABLE:-
+
+create table SAILORS_Anwesha17(S_id Number(5) Primary Key,
+S_name Varchar2(20),
+Rating Number(3),
+Age Number(3));
+
+BOATS TABLE:-
+
+create table BOATS_Anwesha17(B_id Number(5) Primary Key,
+B_name Varchar2(20),
+Color Varchar2(10));
+
+RESERVES TABLE:-
+
+create table RESERVES_Anwesha17(S_id Number(5),
+B_id Number(5) references BOATS_Anwesha17(B_id),
+Day Varchar2(10),
+constraint c8 Primary Key(S_id,B_id),
+constraint c6 Foreign Key (S_id) references SAILORS_Anwesha17(S_id) on delete cascade);
+
+TEACHER TABLE:-
+
+create table TEACHER_Anwesha17(T_id Number(2) Primary Key,
+Name Varchar2(30),
+Dept Varchar2(20));
+
+SUBJECT TABLE:-
+
+create table SUBJECT_Anwesha17(Subno Number(3) Primary Key,
+Subtitle Varchar2(40));
+
+TAUGHTBY TABLE:-
+
+create table TAUGHTBY_Anwesha17(T_id Number(2) references TEACHER_Anwesha17(T_id),
+Subno Number(3) references SUBJECT(Subno),
+Constraint c9 Primary Key(T_id,Subno));
+
+STUDENT TABLE:-
+
+create table STUDENT_Anwesha17(Rollno Number(2) Primary Key,
+Sname Varchar2(40),
+City Varchar2(25));
+
+
+INSERTION OF VALUES:
+
+SAILORS TABLE:-
+
+insert into SAILORS_Anwesha17 values(10,'Tarun',10,25);
+insert into SAILORS_Anwesha17 values(20,'Anex',9,27);
+insert into SAILORS_Anwesha17 values(30,'Apple',7,65);
+
+BOATS TABLE:-
+
+insert into BOATS_Anwesha17 values(101,'Vina','Red');
+insert into BOATS_Anwesha17 values(102,'Pix','Green');
+insert into BOATS_Anwesha17 values(103,'Xer','Blue');
+
+RESERVES TABLE:-
+
+insert into RESERVES_Anwesha17 values(10,101,'Monday');
+insert into RESERVES_Anwesha17 values(20,103,'Tuesday');
+insert into RESERVES_Anwesha17 values(30,102,'Wednesday');
+insert into RESERVES_Anwesha17 values(20,102,'Monday');
+
+TEACHER TABLE:-
+
+insert into TEACHER_Anwesha17 values(001,'DC','CSE');
+insert into TEACHER_Anwesha17 values(002,'SoM','Physics');
+insert into TEACHER_Anwesha17 values(003,'AT','Physics');
+
+SUBJECT TABLE:-
+
+insert into SUBJECT_Anwesha17 values(101,'DBMS');
+insert into SUBJECT_Anwesha17 values(102,'Thermodynamics');
+
+TAUGHTBY TABLE:-
+
+insert into TAUGHTBY_Anwesha17 values(001,101);
+insert into TAUGHTBY_Anwesha17 values(002,102);
+
+STUDENT TABLE:-
+
+insert into STUDENT_Anwesha17 values(21,'Vish','Kolkata');
+insert into STUDENT_Anwesha17 values(23,'Siso','Kolkata');
+insert into STUDENT_Anwesha17 values(30,'Pihu','Spain ');
+insert into STUDENT_Anwesha17 values(32,'Anki','Kolkata');
+
+
+QUERIES:
+
+
+select color from BOATS_Anwesha17,SAILORS_Anwesha17,RESERVES_Anwesha17 where S_name like 'Tarun' and SAILORS_Anwesha17.S_id=RESERVES_Anwesha17.S_id and BOATS_Anwesha17.B_id=RESERVES_Anwesha17.B_id;
+
+select S_id,S_name from SAILORS_Anwesha17 where 'Monday' IN(select day from RESERVES_Anwesha17 where SAILORS_Anwesha17.S_id=RESERVES_Anwesha17.S_id);
+
+select B_id,B_name from BOATS_Anwesha17 where Color IN('Red','Green');
+
+delete from SAILORS_Anwesha17 where AGE>60;
+
+select Name from Teacher_Anwesha17,Subject_Anwesha17,Taughtby_Anwesha17
+where Teacher_Anwesha17.Dept like 'Physics' and 
+Subject_Anwesha17.Subtitle like 'Thermodynamics' and
+Teacher_Anwesha17.T_id=Taughtby_Anwesha17.T_id and
+Subject_Anwesha17.Subno=Taughtby_Anwesha17.Subno;
+
+update Subject set Subtitle='RDBMS' where Subtitle='DBMS';
+
+select * from Student_Anwesha17 where City like 'Kolkata' and Rollno>19 and Rollno<26;
+
+select * from Student_Anwesha17 where City like 'Kolkata' order by Rollno desc;
