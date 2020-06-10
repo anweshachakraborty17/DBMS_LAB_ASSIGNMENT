@@ -1,0 +1,80 @@
+TABLE CREATION
+
+create table salespeople_Anwesha17(SNUM number primary key,
+							SNAME varchar2(20),
+							CITY varchar2(20),
+							COMM number);
+create table customer_Anwesha17(CNUM number primary key,
+						CNAME varchar2(20),
+						CITY varchar2(20),
+						RATING number,
+						SNUM number references salespeople_Anwesha17(SNUM));
+create table order_Anwesha17(ONUM number primary key,
+						AMT number,
+						ODATE date,
+						CNUM number references customer_Anwesha17(CNUM),
+						SNUM number references salespeople_Anwesha17(SNUM));
+
+DATA INSERTION
+
+insert into salespeople_Anwesha17 values(1001, 'Peel', 'London', 0.12);
+insert into salespeople_Anwesha17 values(1002, 'Serees', 'SanJose', 0.13);
+insert into salespeople_Anwesha17 values(1003, 'Motika', 'London', 0.11);
+insert into salespeople_Anwesha17 values(1004, 'Rifkin', 'Barcelona', 0.15);
+insert into salespeople_Anwesha17 values(1005, 'Amelrood', 'New York', 0.10);
+
+insert into customer_Anwesha17 values(2001, 'Hoffman', 'London', 100, 1001);
+insert into customer_Anwesha17 values(2002, 'Giovanni', 'Rome', 200, 1003);
+insert into customer_Anwesha17 values(2003, 'Lill', 'San Junipere', 200, 1002);
+insert into customer_Anwesha17 values(2004, 'Gass', 'Berlin', 300, 1002);
+insert into customer_Anwesha17 values(2005, 'Clemens', 'London', 100, 1001);
+insert into customer_Anwesha17 values(2006, 'Cineros', 'SanJose', 300, 1005);
+insert into customer_Anwesha17 values(2007, 'Pereira', 'Rome', 100, 1004);
+
+insert into order_Anwesha17 values(3001, 18.69, '10-Mar-90', 2006, 1005);
+insert into order_Anwesha17 values(3003, 767.19, '10-Mar-90', 2001, 1001);
+insert into order_Anwesha17 values(3002, 1901.10, '10-Mar-90', 2007, 1004);
+insert into order_Anwesha17 values(3005, 5160.45, '10-Mar-90', 2003, 1002);
+insert into order_Anwesha17 values(3006, 1698.16, '10-Mar-90', 2006, 1005);
+insert into order_Anwesha17 values(3009, 1713.23, '10-Apr-90', 2002, 1003);
+insert into order_Anwesha17 values(3008, 75.75, '10-Apr-90', 2004, 1002);
+
+CREATE VIEW
+SQL-1
+create view view1 as 
+	select CNAME from customer_Anwesha17
+	where RATING = 
+	(select max(RATING) from customer_Anwesha17);
+
+SQL-2
+select * from view1;
+
+SQL-3
+create view view2 as
+	select city, count(*) as "NUMBER" from salespeople_Anwesha17 group by CITY;
+
+SQL-4
+create view view3 as
+	select SNUM, sum(AMT) as "Total", avg(AMT) as "AVERAGE" from order_Anwesha17
+	group by SNUM;
+
+SQL-5
+create view view4 as
+	select salespeople_Anwesha17.SNAME, customer_Anwesha17.CNAME from salespeople_Anwesha17, customer_Anwesha17
+	where salespeople_Anwesha17.SNUM = customer_Anwesha17.SNUM;
+
+SQL-6
+create view salespeople_customer_orders as
+	select salespeople_Anwesha17.SNAME, customer_Anwesha17.CNAME, order_Anwesha17.ONUM
+	from salespeople_Anwesha17, customer_Anwesha17, order_Anwesha17
+	where salespeople_Anwesha17.SNUM = order_Anwesha17.SNUM and customer_Anwesha17.CNUM = order_Anwesha17.CNUM;
+
+SQL-7
+create view salespeople as
+	select SNUM, COMM from salespeople_Anwesha17;
+
+SQL-8
+insert into salespeople values(1006,0.17);
+
+SQL-9
+update salespeople set COMM = 100 where COMM > 0.1 and COMM < 0.15;
