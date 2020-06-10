@@ -1,0 +1,61 @@
+create table EMP_Anwesha17(EMPNO number,
+					ENAME varchar2(10),
+					JOB char(15),
+					MGR number,
+					HIREDATE date,
+					SAL number,
+					COMM number,
+					DEPT_NAME number);
+insert into EMP_Anwesha17 values(&EMPNO,'&ENAME','&JOB',&MGR,'&HIREDATE',&SAL,&COMM,&DEPTNO);
+
+Ans:1
+select ENAME from EMP_Anwesha17 where SAL = (select max(SAL) from EMP_Anwesha17);
+
+Ans:2
+select ENAME from EMP_Anwesha17 where SAL = (select max(SAL) from EMP_Anwesha17 where JOB = 'Salesman');
+
+Ans:3
+select ENAME from EMP_Anwesha17 where SAL = (select min(SAL) from EMP_Anwesha17 where JOB = 'Clerk');
+
+Ans:4
+select DEPT_NAME from EMP_Anwesha17 having avg(SAL) = (
+	select max(AVG) from (
+	select DEPT_NAME ,avg(SAL) as "AVG" from EMP_Anwesha17 group by DEPT_NAME)) group by DEPT_NAME;
+
+Ans:5
+select ENAME from EMP_Anwesha17 where SAL > (select SAL from EMP_Anwesha17 where ENAME = 'Turner');
+
+Ans:6
+select ENAME from EMP_Anwesha17 where HIREDATE > (select HIREDATE from EMP_Anwesha17 where ENAME = 'Allen');
+
+Ans:7
+select DEPT_NAME from EMP_Anwesha17 where ENAME = 'Ford';
+
+Ans:8
+select DEPT_NAME from EMP_Anwesha17 where SAL = (select max(SAL) from EMP_Anwesha17);
+
+Ans:9
+select LOC from DEPT_Anwesha17 where DEPTNO = (select DEPT_NAME from EMP_Anwesha17 where ENAME = 'Smith');
+
+Ans:10
+select LOC from DEPT_Anwesha17 where DEPTNO in (select DEPT_NAME from EMP_Anwesha17 where JOB = 'Manager');
+
+Ans:11
+select SAL from EMP_Anwesha17 where ENAME='Martin';
+
+Ans:12
+select ENAME from EMP_Anwesha17 where SAL > (
+	select max(SAL) from EMP_Anwesha17 where DEPT_NAME in (
+	select DEPTNO from DEPT_Anwesha17 where LOC = 'Dallas'));
+
+Ans:13
+select DEPT_NAME from Anweshahaving count(*) = 0 group by DEPT_NAME;
+
+Ans:14
+select ENAME from EMP_Anwesha17 where HIREDATE = (select HIREDATE from EMP_17 where ENAME = 'Adams');
+
+Ans:15
+select distinct DEPT_NAME from EMP_Anwesha17 where COMM <> 0;
+
+Ans:16
+select ENAME, SAL from EMP_Anwesha17 where SAL in (select min(SAL) from EMP_Anwesha17 group by DEPT_NAME);
